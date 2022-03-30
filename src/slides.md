@@ -8,6 +8,7 @@ size: 16:9
 footer: "Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)"
 marp: true
 ---
+
 # Drupal Development
 
 ---
@@ -51,7 +52,7 @@ services:
 
 ---
 ## Setting Up Drupal
-- Add Twig debugging.
+- Add Twig debugging and auto reload.
 ```yml
 parameters:
   twig.config:
@@ -62,6 +63,14 @@ parameters:
 services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
+```
+
+---
+## Setting Up Drupal
+- Ensuring the setting has taken.
+
+```
+drush php:eval "var_export(\Drupal::getContainer()->getParameter('twig.config'));"
 ```
 
 ---
@@ -230,6 +239,7 @@ $translated = $this->t('String');
 - Best practice is to pass it directly into where it is needed, rather than store in a variable.
 
 ---
+<!-- _footer: "" -->
 ## Passing Arugments
 
 Pass escaped output (should be your default choice).
@@ -245,7 +255,6 @@ Escape (used for URLs)
 $t = t('<a href=":url">@variable</a>',
   [':url' => $url, '@variable' => $variable]);
 ```
-<br>
 
 ---
 # Controllers
@@ -345,6 +354,7 @@ Render arrays are a hierarchical structure of elements that Drupal will convert 
 You can inject raw markup into render arrays, but it's generally best practice to use themes to render HTML.
 
 ---
+<!-- _footer: "" -->
 ## Render Arrays
 
 This render array:
@@ -361,7 +371,6 @@ Will become:
 ```html
 <p>Some description.</p>
 ```
-<br>
 
 ---
 
@@ -685,10 +694,139 @@ Create a node.
 
 ---
 ## Drupal Cache
+- Drupal has a robust and dynamic cache system.
+- Can be used as a static cache bin or as a dynamic cache.
+- It's important to understand what the components are.
+- Ideally, you want to cache as much as possible in the page.
+- For anonymous users you typically want the entire page cached.
 
-- Manually using the cache
-- Cache contexts
-- Cache tags
+---
+<!-- _footer: "" -->
+## Cache Meta Data
+- Added to render arrays to inform Drupal about how to cache the data.
+
+Cache for an hour.
+```php
+'#cache' => [
+  'max-age' => 3600,
+]
+```
+Cache for ever.
+```php
+'#cache' => [
+  'max-age' => \Drupal\Core\Cache\Cache::PERMANENT,
+]
+```
+
+---
+## Cache Tags
+- Cached data can be cached to show that it refernces something.
+- This means that when upstream caches are cleared the tagged caches can also be cleared.
+- For example, a page of content is saved. The cache of that page can be flushed from cached pages, views or anywhere else it is used.
+
+---
+<!-- _footer: "" -->
+
+## Cache Tags
+Create a cache tag for node 1 and node 2.
+```php
+'#cache' => [
+  'tags' => ['node:1', 'node:2'],
+]
+```
+
+Create a cache tag for current user.
+```php
+$cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
+...
+'#cache' => [
+  'tags' => $cacheTags,
+]
+```
+
+---
+## Cache Contexts
+- This tells Drupal how to the data should be cached on the site.
+- For example, the context "user.roles" will store the cache for each user role.
+
+```php
+'#cache' => [
+  'contexts' => ['user.roles', 'url.path_is_front'],
+]
+
+```
+---
+## Cache Contexts
+- Cache Contexts are hierarchical, so Drupal will cache the most granular variation to avoid unnecessary variations.
+- For example, when caching a page per user its pointless to also cache a block on that page per user role.
+
+---
+## Cache Methods
+- Some plugins extend the CacheableDependencyInterface interface.
+- This gives them access to the methods getCacheContexts(), getCacheTags(), and getCacheMaxAge(). 
+
+---
+<!-- _footer: "" -->
+```php
+public function getCacheTags() {
+  // With this when your node change your block will rebuild.
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    // If there is node add its cachetag.
+    $tags = ['node:' . $node->id()]
+    return Cache::mergeTags(parent::getCacheTags(), $tags);
+  }
+  // Return default tags instead.
+  return parent::getCacheTags();
+}
+
+public function getCacheMaxAge() {
+  return Cache::PERMANENT;
+}
+
+public function getCacheContexts() {
+  return ['url'];
+}
+```
+
+---
+## Cache API
+- Get and set things from the Drupal cache.
+- Integrates with cache tags if needed.
+
+Get from cache.
+```php
+\Drupal::cache()->get('cache_id');
+```
+Set data to cache. 
+```php
+\Drupal::cache()->set('cache_id', $data, $max_age, $cache_tags);
+```
+
+---
+<!-- _footer: "" -->
+## Cache API
+```php
+use Drupal\Core\Cache\Cache;
+
+$uid = \Drupal::currentUser()->id(); 
+$cache_id = 'course:' . $uid;
+
+if ($data = \Drupal::cache()->get($cache_id)) {
+  return $item;
+}
+
+$data = massive_calculation();
+$cache_tags[] = 'uid:' . $uid;
+
+\Drupal::cache()->set($cache_id, $data, Cache::PERMANENT, $cache_tags);
+
+return $item;
+```
+---
+## Cache
+- Some things (e.g. blocks) have special callback to return cache tags and cache context information.
+- The methods getCacheTags() getCacheContexts() must return an array informing Drupal of the tags and contexts.
+
 
 ---
 # Templates
@@ -730,6 +868,7 @@ $build['content'] = [
 ```
 
 ---
+<!-- _footer: "" -->
 ## Template
 
 - The custom theme needs a custom tempalte.
@@ -744,7 +883,6 @@ $build['content'] = [
 {% endfor %}
 
 ```
-<br>
 
 ---
 ## Try it!
@@ -900,6 +1038,7 @@ class ArticleHeaderBlock extends BlockBase implements ContainerFactoryPluginInte
 - Place the block on your site.
 
 ---
+<!-- _footer: "" -->
 ## Configure Blocks
 
 - The blockForm()/blockSubmit() allows configuration options to be saved to the block.
@@ -918,12 +1057,28 @@ public function blockSubmit($form, FormStateInterface $form_state) {
 }
 ```
 
-<br>
-
 ---
 ## Try it!
 - Add a configuration form to your block.
 - Pull out the configuration value into the block content.
+
+---
+<!-- _footer: "" -->
+## Block Caches
+- The methods getCacheTags() getCacheContexts() must return an array informing Drupal of the tags and contexts.
+
+```php
+public function getCacheTags() {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  return Cache::mergeTags(parent::getCacheTags(), ['node:' . $node->id()]);
+}
+```
+
+```php
+public function getCacheContexts() {
+  return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+}
+```
 
 ---
 ## Design Philosophy
