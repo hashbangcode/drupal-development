@@ -1,6 +1,6 @@
 ---
 theme: uncover
-paginate: true
+paginate: false
 class:
   - lead
   - invert
@@ -70,7 +70,8 @@ services:
 - Ensuring the setting has taken.
 
 ```
-drush php:eval "var_export(\Drupal::getContainer()->getParameter('twig.config'));"
+drush php:eval "var_export(\Drupal::getContainer()
+   ->getParameter('twig.config'));"
 ```
 
 ---
@@ -1090,6 +1091,3 @@ public function getCacheContexts() {
 ## Coding Standards
 - Drupal has a number of coding standards covering PHP, JavaScript, YAML and CSS.
 - Following them will make your module better, more secure, more maintainable and usable by third parties.
-
----
-Thanks!
