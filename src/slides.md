@@ -140,6 +140,43 @@ core_version_requirement: ^8 || ^9
 ```
 
 ---
+# Documentation
+---
+## Documentation
+- A module should include a readme file.
+- This should include:
+  - Module functionality and how to use it.
+  - Configuration options.
+  - Available hooks/events.
+---
+## Documentation
+- Add a readme file to the top level of your module.
+- Markdown format is preferred.
+- Can also use plain text.
+
+```
+README.md
+```
+README template: https://bit.ly/3KaXi5Q
+
+---
+## README Template
+- Preferred on larger files.
+```
+CONTENTS OF THIS FILE
+---------------------
+
+ * Introduction
+ * Requirements
+ * Recommended modules
+ * Installation
+ * Configuration
+ * Troubleshooting
+ * FAQ
+ * Maintainers
+```
+
+---
 # Hooks
 The simplest building block of any module.
 
@@ -1080,6 +1117,64 @@ public function getCacheContexts() {
   return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
 }
 ```
+---
+# Upates
+---
+## Updates
+- Modules can provide update hooks to update older versions of the module.
+- Mainly involved with updating database tables but can also be used to add defaults for new config items.
+---
+## Updates
+- The hook hook_update_N() is used to run updates.
+- This must be placed into a mymodule.install file.
+```php
+function mymodule_update_9001(&$sandbox = NULL) {
+
+}
+```
+- Each update hook is run in sequence. 9001, 9002, 9003 etc.
+---
+## Updates
+- Updates can be run by visiting `update.php` or by running `drush updatedb`.
+- Drush updates are preferred due to page timeouts and cli memory considerations.
+
+---
+## Updates
+- Update a configuration item.
+```php
+function mymodule_update_9001(&$sandbox = NULL) {
+  \Drupal::service('config.factory')
+    ->getEditable('system.performance')
+    ->set('css.preprocess', FALSE)
+    ->set('js.preprocess', FALSE)
+    ->save();
+}
+```
+---
+<!-- _footer: "" -->
+## Updates
+- Create a new table.
+```php
+function mymodule_update_9001(&$sandbox = NULL) {
+  $spec = [
+  'description' => 'A table to store a field.',
+  'fields' => [
+    'myfield1' => [
+      'description' => 'Myfield1.',      
+      'type' => 'varchar',
+      'length' => 255,
+      'not null' => TRUE,
+      'default' => '',
+    ],
+    'primary key' => ['myfield1'],
+  ]; 
+  $schema = Database::getConnection()->schema();
+  $schema->createTable('mytable', $spec);
+}
+```
+---
+## Try it!
+- Create an update hook.
 
 ---
 ## Design Philosophy
