@@ -23,13 +23,19 @@ marp: true
 ## Setting Up Drupal
 - Lots of options exist to ease development in Drupal.
 - This includes turning off the Drupal cache, forcing autodiscovery on every page load and preventing permission hardening. 
+- Adding these options makes Drupal development easier.
 
 ---
 ## Setting Up Drupal
-- Drupal has a example.settings.local.php file.
-- Copy this to settings.local.php.
-- Uncomment the following from the bottom of the settings.php file.
+- Drupal has a `site/example.settings.local.php` file.
+- Copy this to `site/default/settings.local.php`.
+```
+cp site/example.settings.local.php site/default/settings.local.php
+```
 
+---
+## Setting Up Drupal
+- Uncomment the following from the bottom of the `sites/default/settings.php` file.
 ```php
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
@@ -37,8 +43,9 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 ```
 
 ---
+<!-- _footer: "" -->
 ## Setting Up Drupal
-- The settings.local.php file will also include a development.services.yml file.
+- The settings.local.php file will also include a `sites/development.services.yml` file.
 - This turns on cacheability headers and turns allows backend cache classes to be pucked up.
 - The file looks like this.
 
@@ -88,6 +95,9 @@ $settings['skip_permissions_hardening'] = TRUE;
 ```php
 $settings['cache']['bins']['x'] = 'cache.backend.null';
 ```
+---
+## Try it!
+- Turn on Drupal debug settings.
 
 ---
 # Devel
@@ -552,6 +562,7 @@ mymodule.form:
 - Bluebrint of a form class (<em>on next slide</em>).
 
 ---
+<!-- _footer: "" -->
 ```php
 namespace Drupal\mymodule\Form;
 
@@ -1175,14 +1186,80 @@ function mymodule_update_9001(&$sandbox = NULL) {
 ---
 ## Try it!
 - Create an update hook.
+---
+# Dependencies
+---
+## Dependencies
+- Drupal can install other modules or include third party libraries automatically.
+---
+## Dependencies 
+- Enforce Drupal module dependencies.
+```yml
+name: My Module
+type: module
+description: 'My module'
+core_version_requirement: ^8.8 || ^9
 
+dependencies:
+ - drupal:user
+ - metatag:metatag
+```
+
+---
+## Dependencies
+- Include library dependencies.
+```yml
+mymdoule.admin:
+  version: VERSION
+  css:
+    theme:
+      css/mymodule.admin.css: {}
+  js:
+    js/mymodule.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+```
+---
+# Default Configuration
+---
+## Default Configuration
+- Drupal can install configuration for you when you install the module.
+- Useful for installing entity types or adding fields.
+- Configuration files in **module/config/install** will be installed.
+- Configuration files in **module/config/optional** will be installed if all their dependencies are met.
+---
+## Default Configuration
+```
+config/
+  install/
+    mymodule.settings.yml
+  optional/
+    pathauto.pattern.mymodule.yml
+```
+- mymodule.settings.yml will be installed.
+- pathauto.pattern.mymodule.yml will be installed if the Path Auto module is installed.
+
+---
+# Coding Standards
+---
+## Coding Standards
+- Drupal has a number of coding standards covering PHP, JavaScript, YAML and CSS.
+- Following them will make your module better, more secure, more maintainable and usable by third parties.
+
+---
+## Coding Standards
+```
+phpcs --standard=Drupal,DrupalPractice 
+  --extensions=php,module,inc,install,test,profile,theme,css,info,txt,
+  md,yml path/to/directory
+```
+
+---
+# Some Final Notes
 ---
 ## Design Philosophy
 - Think about modules in the most generic way possible. Even when naming it.
 - Use contfiguration to control what your module acts upon.
 - You should be thinking "this might make a good contrib module".
-
----
-## Coding Standards
-- Drupal has a number of coding standards covering PHP, JavaScript, YAML and CSS.
-- Following them will make your module better, more secure, more maintainable and usable by third parties.
+- Collaboration over competition.
