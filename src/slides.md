@@ -71,7 +71,23 @@ services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
 ```
-
+---
+## Setting Up Drupal
+- Twig debugging comments.
+```html
+<!-- THEME DEBUG -->
+<!-- THEME HOOK: 'block' -->
+<!-- FILE NAME SUGGESTIONS:
+   * block--umami-account-menu.html.twig
+   * block--system-menu-block--account.html.twig
+   x block--system-menu-block.html.twig
+   * block--system.html.twig
+   * block.html.twig
+-->
+<!-- BEGIN OUTPUT from 'core/profiles/demo_umami/themes/umami/templates/classy/block/block--system-menu-block.html.twig' -->
+<nav role="navigation" aria-labelledby="block-umami-account-menu-menu" id="block-umami-account-menu" class="contextual-region block block-menu navigation menu--account">
+      
+```
 ---
 ## Setting Up Drupal
 - Ensuring the setting has taken.
