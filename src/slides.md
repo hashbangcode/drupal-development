@@ -59,7 +59,7 @@ services:
 
 ---
 ## Setting Up Drupal
-- Add Twig debugging and auto reload.
+- Add Twig debugging and auto reload are configured in the .
 ```yml
 parameters:
   twig.config:
@@ -677,29 +677,60 @@ public function validateForm(array &$form,
 
 ---
 # Plugins
-
 ---
 ## Plugins
-
 - Provide functionality through a common interface.
 - Most things in Drupal are actually plugins.
 - Entity types, fields, blocks, image formats, routes are all plugins.
 - You can also define custom plugins.
+---
+## Plugins - Input Filter
+- Simplest plugin is an input filter.
+- This changes the text of a text area as it is rendered.
+- The original text of the field is not altered.
+---
+<!-- _footer: "" -->
+```php
+namespace Drupal\mymodule\Plugin\Filter;
 
+use Drupal\filter\FilterProcessResult;
+use Drupal\filter\Plugin\FilterBase;
+
+/**
+ * My amazing filter.
+ * @Filter(
+ *   id = "myamazingfilter",
+ *   title = @Translation("My amazing filter"),
+ *   description = @Translation("An amazing filter"),
+ *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
+ * )
+ */
+class MyAmazingFilter extends FilterBase {
+  public function process($text, $langcode) {
+    $result = new FilterProcessResult($text);
+    $result->setProcessedText(str_replace('foo', 'bar',
+        $result->getProcessedText));
+    return $result;
+  }
+}
+```
+---
+## Try it!
+- Create an input filter plugin.
+- Make it do something interesting.
+- Assign it to an input filter format.
+- Use it with some filtered content (node, block etc).
 ---
 # Entities
-
 ---
 ## Entities
 - Entities in Drupal represent "things".
 - Nodes, users, comments, taxonomy terms are all entities.
-
 ---
 ## Entities - Bundles
 - Entites can have sub-types, called bundles.
 - Bundles inherit all of the functionality of the entity.
 - Think of them as extended classes.
-
 ---
 ## Entities - Bundles
 | Entity       | Bundles              |
@@ -707,12 +738,9 @@ public function validateForm(array &$form,
 | Node         | Articles, Basic Page |
 | Media        | Image, Video         |
 | Vocabulary   | Category, Tags       |
-
 ---
 ## Loading Entites
-
 By ID:
-
 ```php
 $entity_id = 123;
 $entity = \Drupal::entityTypeManager()
@@ -720,29 +748,22 @@ $entity = \Drupal::entityTypeManager()
   ->load($entity_id);
 ```
 ---
-
 ## Loading Entities
 By field value:
-
 ```php
 $value = 'some value';
 $entity = \Drupal::entityTypeManager()
   ->getStorage('node')
   ->loadByProperties(['field_name' => $value]);
 ```
-
 ---
 ## Loading Field Values
-
 ```php
 $field_value = $entity->get('field_name')->getValue()[0]['value'];
 ```
-
 ---
 ## Creating Entities
-
 Create a node.
-
 ```php
     $node = Node::create([
       'title' => 'Article title',
@@ -753,10 +774,8 @@ Create a node.
 
     $newArticleId = $node->id();
 ```
-
 ---
 # Drupal Cache
-
 ---
 ## Drupal Cache
 - Drupal has a robust and dynamic cache system.
@@ -764,7 +783,6 @@ Create a node.
 - It's important to understand what the components are.
 - Ideally, you want to cache as much as possible in the page.
 - For anonymous users you typically want the entire page cached.
-
 ---
 <!-- _footer: "" -->
 ## Cache Meta Data
@@ -782,16 +800,13 @@ Cache for ever.
   'max-age' => \Drupal\Core\Cache\Cache::PERMANENT,
 ]
 ```
-
 ---
 ## Cache Tags
 - Cached data can be cached to show that it refernces something.
 - This means that when upstream caches are cleared the tagged caches can also be cleared.
 - For example, a page of content is saved. The cache of that page can be flushed from cached pages, views or anywhere else it is used.
-
 ---
 <!-- _footer: "" -->
-
 ## Cache Tags
 Create a cache tag for node 1 and node 2.
 ```php
@@ -799,7 +814,6 @@ Create a cache tag for node 1 and node 2.
   'tags' => ['node:1', 'node:2'],
 ]
 ```
-
 Create a cache tag for current user.
 ```php
 $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
@@ -808,7 +822,6 @@ $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
   'tags' => $cacheTags,
 ]
 ```
-
 ---
 ## Cache Contexts
 - This tells Drupal how to the data should be cached on the site.
@@ -818,13 +831,11 @@ $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
 '#cache' => [
   'contexts' => ['user.roles', 'url.path_is_front'],
 ]
-
 ```
 ---
 ## Cache Contexts
 - Cache Contexts are hierarchical, so Drupal will cache the most granular variation to avoid unnecessary variations.
 - For example, when caching a page per user its pointless to also cache a block on that page per user role.
-
 ---
 ## Cache Methods
 - Some plugins extend the CacheableDependencyInterface interface.
@@ -852,7 +863,6 @@ public function getCacheContexts() {
   return ['url'];
 }
 ```
-
 ---
 ## Cache API
 - Get and set things from the Drupal cache.
@@ -874,7 +884,7 @@ Set data to cache.
 use Drupal\Core\Cache\Cache;
 
 $uid = \Drupal::currentUser()->id(); 
-$cache_id = 'course:' . $uid;
+$cache_id = 'something:' . $uid;
 
 if ($data = \Drupal::cache()->get($cache_id)) {
   return $item;
