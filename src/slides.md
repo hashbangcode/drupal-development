@@ -411,62 +411,125 @@ class MyController extends ControllerBase {
 **Hint**: Some cache clearing may be needed.
 
 ---
+# Render Arrays
+---
 ## Render Arrays
-
-Render arrays are a hierarchical structure of elements that Drupal will convert into markup.
-
-You can inject raw markup into render arrays, but it's generally best practice to use themes to render HTML.
-
+- Render arrays are a hierarchical structure of elements that Drupal will convert into markup.
+- This is how we generate output in Drupal.
+- Render arrays take a number of different parameters, but largely depend on what type of rendering you are trying to do.
+---
+## Render Arrays
+- Render arrays should be built up and returned as a single array from the rendering method.
+```php
+public function action() {
+  $build = [];
+  $build['text'] = [
+    '#plain_text' => t('Escaped text'),
+  ];
+  return $build;
+}
+```
+---
+## Render Arrays
+There are 3 main ways to use a render array.
+- Direct properties
+- Tempaltes
+- Render element types
+---
+## Render Arrays - Direct Properties
+- Drupal will look for the presence of 'plain_text' or 'markup' in the render array.
+- These are used to generate either escaped text output or for simple blocks of HTML.
+- These should be used sparingly as theme and render elements allow of better control over markup.
+---
+## Render Arrays - Direct Properties
+The 'plain_text' property will fully escape all output.
+```php
+$build['text'] = [
+  '#plain_text' => t('Escaped text'),
+];
+```
+Output:
+```
+Escaped text
+```
+---
+## Render Arrays - Direct Properties
+The 'markup' property will allow some HTML elements to be included in the output. Script tags will be escaped to prevent cross site scripting issues.
+```php
+$build['markup'] = [
+  '#markup' => '<p>' . t('Markup') . '</p>',
+];
+```
+Output:
+```
+<p>Markup</p>
+```
+---
+## Render Arrays - Direct Properties
+The tags allows can be controlled via n 'allowed_tags' property.
+```php
+$build['markup'] = [
+  '#markup' => '<p>' . t('Markup') . '</p>',
+  '#allowed_tags' => ['div']
+];
+```
+Output:
+```
+Markup
+```
+---
+## Render Arrays - Tempaltes
+- These are generated from the hook_theme() hook.
+- There are a few Drupal core templates, but any module can add more.
+- They use the 'theme' property in the render array.
 ---
 <!-- _footer: "" -->
-## Render Arrays
-
-This render array:
+## Render Arrays - Tempaltes
+- The item_list template can be used to print a list of items.
 ```php
-$build = [];
-$build['description'] = [
-  '#type' => 'html_tag',
-  '#tag' => 'p',
-  '#value' => $this->t('Some description.'),
-];
-return $build;
-```
-Will become:
-```html
-<p>Some description.</p>
-```
-
----
-
-## Render Arrays
-
-This render array:
-
-```php
-$build = [];
-$build['list'] = [
+$build['item_list'] = [
   '#theme' => 'item_list',
-  '#items' => ['Item 1', 'Item 2'],
+  '#title' => $this->t('Title'),
+  '#list_type' => 'ul',
+  '#items' => [1, 2, 3,],
 ];
-return $build;
 ```
-
-Will become:
-
-```html
-<ul><li>Items 1</li><li>Item 2</li></ul>
+Output:
 ```
-
+<h3>Title</h3>
+<ul><li>1</li><li>2</li><li>3</li></ul>
+```
+---
+<!-- _footer: "" -->
+## Render Arrays - Render Elements
+- Render elements are classes that will render out content.
+- They are registered in Drupal through a plugin interface.
+- Default render elements are `ElementInterface` objects.
+- Form elements are also render elements, of the type `FormElementInterface`, which extends `ElementInterface`.
+---
+## Render Arrays - Render Elements
+- Render elements use the 'type' property.
+```php
+$build['link'] = [
+  '#type' => 'link',
+  '#title' => >t('Link Example'),
+  '#url' => Url::fromRoute('entity.node.canonical', ['node' => 1]),
+];
+```
+Output:
+```
+<a href="/node/1">Link Example</a>
+```
 ---
 ## Try It!
 
 - Change your controller to return a render array.
+- Populate the render array with some content.
 
-**Hint**: item_list, html_tag.
+**Hint**: `#plain_text`, `#markup`, `'#theme' => 'item_list'`, `'#type' => 'link'` might be useful.
 
 ---
 # Menu Links
-
 ---
 ## Menu Plugins
 
@@ -485,7 +548,6 @@ Menu link is created under /admin.
 
 ---
 ## Try it!
-
 - Create a route.
 - Create a controller to listen to that route.
 - Return some content.
@@ -493,9 +555,7 @@ Menu link is created under /admin.
 
 ---
 ## Passing Parameters To Routes
-
 - This is known as adding a wildcard to a route.
-
 ```yml
 mymodule.controller_action:
   path: '/mycontroller/action/{parameter}'
@@ -508,12 +568,9 @@ mymodule.controller_action:
 
 ---
 ## Controller With Parameter
-
 A basic controller looks like this.
-
 ```php
 <?php
-
 namespace Drupal\mymodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -528,7 +585,6 @@ class MyController extends ControllerBase {
 
 ---
 ## Route Permissions
-
 ```yml
 mymodule.controller_action:
   path: '/mycontroller/action/{parameter}'
@@ -550,18 +606,15 @@ mymodule.controller_action:
 
 ---
 # Forms
-
 ---
 ## Forms
 - In Drupal, all forms are generated using the Form API.
 - It's like a render array, but for form fields.
 - By default, all forms use POST.
-
+- They are registered using the routing.yml file.
 ---
 ## Creating A Form
-
-Change the route to point to a Form class.
-
+Add a route to point to a Form class.
 ```yml
 mymodule.form:
   path: '/my-form'
@@ -575,8 +628,8 @@ mymodule.form:
 ---
 ## Creating A Form
 - Add a class to the directory `src/Form/MyForm.php`.
-- Bluebrint of a form class (<em>on next slide</em>).
-
+- Blueprint of a form class (<em>on next slide</em>).
+- The return of the buildForm() method is a form render array.
 ---
 <!-- _footer: "" -->
 ```php
@@ -604,8 +657,10 @@ class MyForm extends FormBase {
 ```
 
 ---
+<!-- _footer: "" -->
 ## Creating A Form
-- The form API is very like the render array, but centered around form elements.
+- The form API is an extension of the render array.
+- Form elements extend the `FormElementInterface`.
 - The most common form elements are:
   - textfield
   - radios
@@ -613,24 +668,32 @@ class MyForm extends FormBase {
   - checkboxes
   - select
   - submit
-
+- Normal render elements can also be used.
 ---
+<!-- _footer: "" -->
 ## Creating A From
+- The following is a simple form.
 ```php
-$form['name'] = [
-  '#type' => 'textfield',
-  '#title' => $this->t('Name'),
-  '#required' => TRUE,
-];
-$form['submit'] = [
-  '#type' => 'submit',
-  '#value' => $this->t('Submit'),
-];
+public function buildForm(array $form, FormStateInterface $form_state) {
+  $form['description'] = [
+    '#markup' => '<p>' . $this->t('Fill in the form') . '</p>'
+  ];
+  $form['name'] = [
+    '#type' => 'textfield',
+    '#title' => $this->t('Name'),
+    '#required' => TRUE,
+  ];
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => $this->t('Submit'),
+  ];
+  return $form;
+}
 ```
 
 ---
 ## Form Submission
-
+- Form submissions automatically pass through the submitForm() method.
 ```php
 public function submitForm(array &$form,   
  FormStateInterface $form_state) {
@@ -654,7 +717,7 @@ public function validateForm(array &$form,
  FormStateInterface $form_state) {
   $name = $form_state->getValue('name');
 
-  if ($name == 'Bob') {
+  if ($name === 'Bob') {
     // Name is Bob, trigger error!
     $form_state->setErrorByName('name', $this->t('Name is Bob. Cannot continue.'));
   }
