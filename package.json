@@ -1,7 +1,7 @@
 {
-  "name": "talk-template",
+  "name": "drupal-development",
   "version": "1.0.0",
-  "description": "",
+  "description": "Drupal development",
   "main": "index.js",
   "scripts": {
     "build:all": "npm run build:html && npm run build:pdf && npm run build:pp",
@@ -13,7 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:html": "marp --watch"
   },
-  "author": "",
+  "author": "#! code",
   "license": "Apache2",
   "devDependencies": {
     "@marp-team/marp-cli": "^1.7.0"
