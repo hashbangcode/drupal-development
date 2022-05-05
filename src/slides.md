@@ -16,24 +16,74 @@ marp: true
 ## Drupal Development
 - Extending Drupal's functionalty to do whatever you want it to.
 - Covers Modules, Themes, Install Profiles.
-
+---
+# Drush
+---
+## Drush
+- Drush is a command line tool that allows you to interact with Drupal.
+- Almost anything you can do through the inferface can be done through Drush.
+- Most useful for clearing Drupal caches, logging in, managing configuration, and performing updates.
+---
+## Drush
+- To install Drush require it through composer.
+```
+composer require drush/drush
+```
+- You can now ensure drush is installed by running Drush on its own.
+```
+./vendor/bin/drush
+```
+- This will tell you the commands available.
+---
+## Drush - Commands
+- Get some information about the site using the `status` command.
+```
+./vendor/bin/drush status
+```
+---
+## Drush - Commands
+- Clear Drupal caches using the `cache:rebuild` or `cr` command.
+```
+./vendor/bin/drush cache:rebuild
+./vendor/bin/drush cr
+```
+---
+## Drush - Commands
+- Log in as the admin user with the `user:login` or `uli` command.
+```
+./vendor/bin/drush user:login
+./vendor/bin/drush uli
+```
+- Log in as a user by passing a user ID.
+```
+./vendor/bin/drush uli --uid=5
+```
+---
+## Try it!
+- Install Drush using:
+```
+composer require drush/drush
+```
+- Try some commands out.
 ---
 # Setting Up Drupal For Development
-
 ---
 ## Setting Up Drupal
 - Lots of options exist to ease development in Drupal.
-- This includes turning off the Drupal cache, forcing autodiscovery on every page load and preventing permission hardening. 
+- This includes turning off the Drupal cache, forcing autodiscovery of templates and services on every page load and preventing permission hardening. 
 - Adding these options makes Drupal development easier.
+---
+## Setting Up Drupal
+- Let's change some settings to make development easier.
 
 ---
 ## Setting Up Drupal
 - Drupal has a `site/example.settings.local.php` file.
 - Copy this to `site/default/settings.local.php`.
+- You can use this command.
 ```
 cp site/example.settings.local.php site/default/settings.local.php
 ```
-
 ---
 ## Setting Up Drupal
 - Uncomment the following from the bottom of the `sites/default/settings.php` file.
@@ -42,14 +92,27 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 ```
-
+- Note: You may need to reset permissions on the settings.php file using `chmod`.
+---
+## Setting Up Drupal
+- Drupal will check the permissions of your settings.php files and ensure they are secure.
+- If they aren't Drupal will set them correctly, which makes altering settings.php files difficult.
+- To turn this off make sure this setting is enabled.
+```php
+$settings['skip_permissions_hardening'] = TRUE;
+```
+---
+## Setting Up Drupal
+- To turn off the permanent caches uncomment any line that looks like this.
+```php
+$settings['cache']['bins']['x'] = 'cache.backend.null';
+```
 ---
 <!-- _footer: "" -->
 ## Setting Up Drupal
 - The settings.local.php file will also include a `sites/development.services.yml` file.
 - This turns on cacheability headers and turns allows backend cache classes to be pucked up.
 - The file looks like this.
-
 ```yml
 parameters:
   http.response.debug_cacheability_headers: true
@@ -57,10 +120,9 @@ services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
 ```
-
 ---
 ## Setting Up Drupal
-- Add Twig debugging and auto reload are configured in the .
+- Twig debugging and auto reload are configured in the `sites/development.services.yml` file.
 ```yml
 parameters:
   twig.config:
@@ -71,6 +133,13 @@ parameters:
 services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
+```
+---
+## Setting Up Drupal
+- Ensuring the setting has taken.
+```
+drush php:eval "var_export(\Drupal::getContainer()
+   ->getParameter('twig.config'));"
 ```
 ---
 ## Setting Up Drupal
@@ -90,35 +159,14 @@ services:
       
 ```
 ---
-## Setting Up Drupal
-- Ensuring the setting has taken.
-
-```
-drush php:eval "var_export(\Drupal::getContainer()
-   ->getParameter('twig.config'));"
-```
-
----
-## Setting Up Drupal
-- Drupal will check the permissions of your settings.php files and ensure they are secure.
-- To turn this off make sure this setting is enabled.
-```php
-$settings['skip_permissions_hardening'] = TRUE;
-```
-
----
-## Setting Up Drupal
-- To turn off the permanent caches uncomment any line that looks like this.
-```php
-$settings['cache']['bins']['x'] = 'cache.backend.null';
-```
----
 ## Try it!
 - Turn on Drupal debug settings.
-
+- Clear caches.
+- Look at the HTML source for twig debug messages.
+- Look at the site headers for cache debugging output.
+- Look through the rest of the options.
 ---
 # Devel
-
 ---
 ## Devel
 - The Devel module is a good way of finding out more about the current state of Drupal.
@@ -1005,11 +1053,9 @@ $build['content'] = [
   '#some_list' => ['item1', 'item2'],
 ];
 ```
-
 ---
 <!-- _footer: "" -->
 ## Template
-
 - The custom theme needs a custom tempalte.
 - The <em>templates</em> directory is the default location for templates in a module.
 - Our hook will use <em>templates/my_custom_tempalte.html.twig</em>.
@@ -1022,7 +1068,6 @@ $build['content'] = [
 {% endfor %}
 
 ```
-
 ---
 ## Try it!
 - Create a hook_theme().
