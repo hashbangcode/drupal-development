@@ -225,10 +225,9 @@ core_version_requirement: ^8 || ^9
   - Available hooks/events.
 ---
 ## Documentation
-- Add a readme file to the top level of your module.
+- Many developers include a readme file. Good to read if you want to know more about a module.
 - Markdown format is preferred.
 - Can also use plain text.
-
 ```
 README.md
 ```
@@ -266,17 +265,6 @@ Hooks allow you to:
 Any module can define custom hooks.
 
 ---
-## Some Popular Hooks
-
-- `hook_form_alter($form, $fotm_state, $id)`
-- `hook_theme($existing, $type, $theme, $path)`
-- `hook_preprocess_page(&$variables)`
-- `hook_theme_suggestions_alter(&$suggestions, $variables, $hook)`
-- `hook_node_insert($entity)`
-- `hook_node_update($entity)`
-- `hook_update_9001(&$sandbox)`
-
----
 ## Naming Hooks
 - Hooks are named after the module they appear in.
 
@@ -297,30 +285,80 @@ mymodule_form_alter()
 ```php
 hook_node_insert($entity)
 ```
+Is used to detect a node being inserted.
+
 Can also be:
 ```php
 hook_user_insert($entity)
 ```
 
-When detecting users being created.
+To detect users being inserted.
+
+---
+## Some Popular Hooks
+
+- `hook_form_alter($form, $fotm_state, $id)`
+- `hook_theme($existing, $type, $theme, $path)`
+- `hook_preprocess_page(&$variables)`
+- `hook_theme_suggestions_alter(&$suggestions, $variables, $hook)`
+- `hook_node_insert($entity)`
+- `hook_node_update($entity)`
+- `hook_update_9001(&$sandbox)`
 
 ---
 ## Example Hook
 
-Use hook form alter to alter a form.
+- Use a hook_form_alter() hook to alter a form.
 
 ```php
 use Drupal\Core\Form\FormStateInterface;
 
-function mymodule_hook_form_alter(
-  &$form,
-  FormStateInterface $form_state,
-  $form_id) {
-  if ($form_id == 'node_article_form') {
-    $form['title']['widget'][0]['value']['#default_value'] = t('title');
-  }
+function mymodule_form_alter(&$form,
+FormStateInterface $form_state, $form_id) {
+ if ($form_id == 'node_article_form') {
+  $form['title']['widget'][0]['value']['#default_value'] = t('title');
+ }
 }
 ```
+
+---
+<!-- _footer: "" -->
+## Example Hook
+- Use a hook to register a toolbar link.
+```php
+use Drupal\Core\Url;
+
+function mymodule_toolbar() {
+  $items = [];
+  $items['monkey'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('Home'),
+      '#url' => Url::fromRoute('<front>'),
+    ],
+    '#weight' => 50,
+  ];
+  return $items;
+}
+```
+---
+## Example Hook
+- Preprocess a the page title to change information..
+```php
+function mymodule_preprocess_page_title(&$variables) {
+ $node = \Drupal::routeMatch()->getParameter('node');
+ if ($node) {
+  $variables['title'] = [
+   '#markup' => 'Node Title:'.$node->getTitle()];
+ }
+}
+```
+
+---
+## Hooks
+- Drupal documentation on hooks, includes a list of available hooks in core.
+- [https://bit.ly/3NlK7Ad]()
 
 ---
 ## Try It!
@@ -329,9 +367,7 @@ function mymodule_hook_form_alter(
 - Flush caches!
 
 ---
-
 # Translation
-
 ---
 ## Translation
 - Why talk about multilingual code so early?
