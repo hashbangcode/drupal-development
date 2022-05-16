@@ -5,6 +5,10 @@ class:
   - lead
   - invert
 size: 16:9
+style: |
+  .small-text {
+    font-size: 0.75rem;
+  }
 footer: "Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)"
 marp: true
 
@@ -410,11 +414,16 @@ $t = t('<a href=":url">@variable</a>',
 
 ---
 ## Controllers
+- Page responses in Drupal are created by a **Controller**. This can be a page of content or an API response.
+- A controller is a PHP class that contains methods.
+- Methods that return page responces are called **actions**.
+- Actoins are registered using **Routes**.
 
-- Add an action for a particular **Route**.
-- Parameters can be passed to the controller.
-- Should return an array of content ready to be rendered or a response object.
-- Multiple routes can use the same controller.
+---
+## Controllers
+- Parameters can be passed to the controller, which are registered with the route.
+- An action should return an array of content ready to be rendered or a response object.
+- Multiple routes can use the same controller with different action methods.
 
 ---
 ## Routes
@@ -442,7 +451,7 @@ mymodule.controller_action:
 
 ## Controller
 
-A basic controller looks like this.
+A basic controller class looks like this.
 
 ```php
 <?php
@@ -462,7 +471,7 @@ class MyController extends ControllerBase {
 ---
 ## Controller Return A Response
 
-A basic controller looks like this.
+Return a Response() object.
 
 ```php
 namespace Drupal\mymodule\Controller;
@@ -602,7 +611,7 @@ $build['link'] = [
 ];
 ```
 Output:
-```
+```html
 <a href="/node/1">Link Example</a>
 ```
 ---
@@ -617,7 +626,6 @@ Output:
 # Menu Links
 ---
 ## Menu Plugins
-
 - You can inject menu items into Drupals menu system.
 - Stored in the `*.links.menu.yml` file.
 - These menu items are not editable.
@@ -652,6 +660,7 @@ mymodule.controller_action:
 ```
 
 ---
+<!-- _footer: "" -->
 ## Controller With Parameter
 A basic controller looks like this.
 ```php
@@ -667,9 +676,12 @@ class MyController extends ControllerBase {
 }
 
 ```
+<p class="small-text">Note the name "parameter" needs to match the variable $parameter.</p>
 
 ---
 ## Route Permissions
+- The requirements section allows you to detail simple permissions for routes.
+
 ```yml
 mymodule.controller_action:
   path: '/mycontroller/action/{parameter}'
