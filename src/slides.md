@@ -393,7 +393,7 @@ $translated = $this->t('String');
 
 ---
 <!-- _footer: "" -->
-## Passing Arugments
+## Passing Arguments
 
 Pass escaped output (should be your default choice).
 ```php
@@ -408,30 +408,24 @@ Escape (used for URLs)
 $t = t('<a href=":url">@variable</a>',
   [':url' => $url, '@variable' => $variable]);
 ```
-
 ---
 # Controllers
-
 ---
 ## Controllers
 - Page responses in Drupal are created by a **Controller**. This can be a page of content or an API response.
 - A controller is a PHP class that contains methods.
 - Methods that return page responces are called **actions**.
-- Actoins are registered using **Routes**.
-
+- Actions are registered using **Routes**.
 ---
 ## Controllers
 - Parameters can be passed to the controller, which are registered with the route.
 - An action should return an array of content ready to be rendered or a response object.
 - Multiple routes can use the same controller with different action methods.
-
 ---
 ## Routes
-
 - All controllers need a route.
 - This tells Drupal what controller to use when a path is requested.
 - Defined in a *.routes.yml file.
-
 ---
 ## Routes
 
