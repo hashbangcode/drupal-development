@@ -20,6 +20,7 @@
   },
   "marp": {
     "allowLocalFiles": true,
+    "html": true,
     "inputDir": "src",
     "output": "dist"
   }

@@ -940,6 +940,7 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 <li><strong>HtmlResponse</strong> - A HTML response.</li>
 <li><strong>JsonResponse</strong> - JSON response.</li>
 <li><strong>XmlResponse</strong> - XML response.</li>
+<li><strong>RedirectResponse</strong> - Redirect to another page.</li>
 <li><strong>CacheableResponse</strong> - A response that contains Drupal cache metadata.</li>
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
@@ -1158,8 +1159,9 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <pre><code class="language-php"><span class="hljs-variable">$build</span>[<span class="hljs-string">&#x27;link&#x27;</span>] = [
   <span class="hljs-string">&#x27;#type&#x27;</span> =&gt; <span class="hljs-string">&#x27;link&#x27;</span>,
-  <span class="hljs-string">&#x27;#title&#x27;</span> =&gt; &gt;t(<span class="hljs-string">&#x27;Link Example&#x27;</span>),
-  <span class="hljs-string">&#x27;#url&#x27;</span> =&gt; Url::fromRoute(<span class="hljs-string">&#x27;entity.node.canonical&#x27;</span>, [<span class="hljs-string">&#x27;node&#x27;</span> =&gt; <span class="hljs-number">1</span>]),
+  <span class="hljs-string">&#x27;#title&#x27;</span> =&gt; t(<span class="hljs-string">&#x27;Link Example&#x27;</span>),
+  <span class="hljs-string">&#x27;#url&#x27;</span> =&gt; \Drupal\Core\Url::fromRoute(<span class="hljs-string">&#x27;entity.node.canonical&#x27;</span>,
+    [<span class="hljs-string">&#x27;node&#x27;</span> =&gt; <span class="hljs-number">1</span>]),
 ];
 </code></pre>
 <p>Output:</p>
@@ -1272,7 +1274,7 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 }
 
 </code></pre>
-&lt;p class="small-text"&gt;Note the name "parameter" needs to match the variable $parameter.&lt;/p&gt;
+<p class="small-text">Note the name "parameter" needs to match the variable $parameter.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="76" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
@@ -1366,7 +1368,7 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 <h2>Creating A Form</h2>
 <ul>
 <li>Add a class to the directory <code>src/Form/MyForm.php</code>.</li>
-<li>Blueprint of a form class (&lt;em&gt;on next slide&lt;/em&gt;).</li>
+<li>Blueprint of a form class (<em>on next slide</em>).</li>
 <li>The return of the buildForm() method is a form render array.</li>
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
@@ -1553,100 +1555,13 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
-<h1>Plugins</h1>
+<h1>Entities</h1>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="92" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
 " class="lead invert" data-marpit-pagination="92" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
-  font-size: 0.75rem;
-}
-;" data-size="16:9">
-<h2>Plugins</h2>
-<ul>
-<li>Provide functionality through a common interface.</li>
-<li>Most things in Drupal are actually plugins.</li>
-<li>Entity types, fields, blocks, image formats, routes are all plugins.</li>
-<li>You can also define custom plugins.</li>
-</ul>
-<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="93" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
-  font-size: 0.75rem;
-}
-" class="lead invert" data-marpit-pagination="93" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
-  font-size: 0.75rem;
-}
-;" data-size="16:9">
-<h2>Plugins - Input Filter</h2>
-<ul>
-<li>Simplest plugin is an input filter.</li>
-<li>This changes the text of a text area as it is rendered.</li>
-<li>The original text of the field is not altered.</li>
-</ul>
-<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="94" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
-  font-size: 0.75rem;
-}
-" class="lead invert" data-marpit-pagination="94" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
-  font-size: 0.75rem;
-}
-;" data-size="16:9"><pre><code class="language-php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">mymodule</span>\<span class="hljs-title">Plugin</span>\<span class="hljs-title">Filter</span>;
-
-<span class="hljs-keyword">use</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">filter</span>\<span class="hljs-title">FilterProcessResult</span>;
-<span class="hljs-keyword">use</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">filter</span>\<span class="hljs-title">Plugin</span>\<span class="hljs-title">FilterBase</span>;
-
-<span class="hljs-comment">/**
- * My amazing filter.
- * <span class="hljs-doctag">@Filter</span>(
- *   id = &quot;myamazingfilter&quot;,
- *   title = <span class="hljs-doctag">@Translation</span>(&quot;My amazing filter&quot;),
- *   description = <span class="hljs-doctag">@Translation</span>(&quot;An amazing filter&quot;),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
- * )
- */</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAmazingFilter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FilterBase</span> </span>{
-  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-variable">$text</span>, <span class="hljs-variable">$langcode</span></span>) </span>{
-    <span class="hljs-variable">$result</span> = <span class="hljs-keyword">new</span> FilterProcessResult(<span class="hljs-variable">$text</span>);
-    <span class="hljs-variable">$result</span>-&gt;setProcessedText(str_replace(<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>,
-        <span class="hljs-variable">$result</span>-&gt;getProcessedText));
-    <span class="hljs-keyword">return</span> <span class="hljs-variable">$result</span>;
-  }
-}
-</code></pre>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="95" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
-  font-size: 0.75rem;
-}
-" class="lead invert" data-marpit-pagination="95" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
-  font-size: 0.75rem;
-}
-;" data-size="16:9">
-<h2>Try it!</h2>
-<ul>
-<li>Create an input filter plugin.</li>
-<li>Make it do something interesting.</li>
-<li>Assign it to an input filter format.</li>
-<li>Use it with some filtered content (node, block etc).</li>
-</ul>
-<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="96" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
-  font-size: 0.75rem;
-}
-" class="lead invert" data-marpit-pagination="96" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
-  font-size: 0.75rem;
-}
-;" data-size="16:9">
-<h1>Entities</h1>
-<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="97" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
-  font-size: 0.75rem;
-}
-" class="lead invert" data-marpit-pagination="97" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1657,10 +1572,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="98" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="93" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="98" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="93" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1672,10 +1587,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="99" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="94" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="99" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="94" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1704,10 +1619,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </table>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="100" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="95" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="100" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="95" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1720,10 +1635,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="101" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="96" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="101" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="96" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1736,10 +1651,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="102" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="97" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="102" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="97" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1748,10 +1663,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="103" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="98" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="103" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="98" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1768,20 +1683,20 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="104" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="99" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="104" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="99" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
 <h1>Drupal Cache</h1>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="105" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="100" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="105" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="100" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1795,10 +1710,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="106" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="101" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="106" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="101" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1817,10 +1732,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 ]
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="107" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="102" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="107" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="102" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1832,10 +1747,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="108" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="103" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="108" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="103" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1853,10 +1768,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 ]
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="109" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="104" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="109" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="104" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1871,10 +1786,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="110" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="105" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="110" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="105" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1885,10 +1800,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="111" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="106" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="111" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="106" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1899,10 +1814,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="112" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="107" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="112" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="107" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9"><pre><code class="language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCacheTags</span>(<span class="hljs-params"></span>) </span>{
@@ -1925,10 +1840,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 }
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="113" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="108" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="113" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="108" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1945,10 +1860,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="114" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="109" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="114" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="109" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1970,10 +1885,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 <span class="hljs-keyword">return</span> <span class="hljs-variable">$item</span>;
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="115" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="110" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="115" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="110" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -1984,20 +1899,20 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="116" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="111" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="116" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="111" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
 <h1>Templates</h1>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="117" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="112" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="117" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="112" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2008,10 +1923,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="118" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="113" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="118" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="113" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2032,10 +1947,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="119" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="114" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="119" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="114" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2052,18 +1967,18 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="120" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="115" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="120" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="115" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
 <h2>Template</h2>
 <ul>
 <li>The custom theme needs a custom tempalte.</li>
-<li>The &lt;em&gt;templates&lt;/em&gt; directory is the default location for templates in a module.</li>
-<li>Our hook will use &lt;em&gt;templates/my_custom_tempalte.html.twig&lt;/em&gt;.</li>
+<li>The <em>templates</em> directory is the default location for templates in a module.</li>
+<li>Our hook will use <em>templates/my_custom_tempalte.html.twig</em>.</li>
 </ul>
 <pre><code class="language-twig"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">{{ description }}</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 
@@ -2073,10 +1988,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 
 </span></code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="121" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="116" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="121" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="116" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2089,20 +2004,20 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 <p><strong>Hint</strong>: Some cache clearing may be needed.</p>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="122" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="117" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="122" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="117" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
 <h1>CSS &amp; JavaScript</h1>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="123" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="118" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="123" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="118" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2116,10 +2031,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="124" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="119" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="124" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="119" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2141,10 +2056,10 @@ FormStateInterface <span class="hljs-variable">$form_state</span>, <span class="
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="125" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="120" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="125" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="120" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2159,10 +2074,10 @@ state<br />
 theme</p>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="126" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="121" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="126" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="121" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2177,10 +2092,10 @@ theme</p>
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="127" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="122" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="127" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="122" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2192,10 +2107,10 @@ theme</p>
 </ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="128" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="123" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="128" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="123" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2214,10 +2129,10 @@ theme</p>
 </code></pre>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="129" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="124" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
   font-size: 0.75rem;
 }
-" class="lead invert" data-marpit-pagination="129" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+" class="lead invert" data-marpit-pagination="124" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
   font-size: 0.75rem;
 }
 ;" data-size="16:9">
@@ -2227,6 +2142,93 @@ theme</p>
 <li>Make sure the library appears at the bottom of the page.</li>
 </ul>
 <p><strong>Hint</strong>: The <em>footer</em> setting will come in handy here.</p>
+<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="125" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+  font-size: 0.75rem;
+}
+" class="lead invert" data-marpit-pagination="125" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+  font-size: 0.75rem;
+}
+;" data-size="16:9">
+<h1>Plugins</h1>
+<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="126" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+  font-size: 0.75rem;
+}
+" class="lead invert" data-marpit-pagination="126" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+  font-size: 0.75rem;
+}
+;" data-size="16:9">
+<h2>Plugins</h2>
+<ul>
+<li>Provide functionality through a common interface.</li>
+<li>Most things in Drupal are actually plugins.</li>
+<li>Entity types, fields, blocks, image formats, routes are all plugins.</li>
+<li>You can also define custom plugins.</li>
+</ul>
+<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="127" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+  font-size: 0.75rem;
+}
+" class="lead invert" data-marpit-pagination="127" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+  font-size: 0.75rem;
+}
+;" data-size="16:9">
+<h2>Plugins - Input Filter</h2>
+<ul>
+<li>Simplest plugin is an input filter.</li>
+<li>This changes the text of a text area as it is rendered.</li>
+<li>The original text of the field is not altered.</li>
+</ul>
+<footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="128" data-paginate="true" data-class="lead invert" data-theme="uncover" data-style=".small-text {
+  font-size: 0.75rem;
+}
+" class="lead invert" data-marpit-pagination="128" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--theme:uncover;--style:.small-text {
+  font-size: 0.75rem;
+}
+;" data-size="16:9"><pre><code class="language-php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">mymodule</span>\<span class="hljs-title">Plugin</span>\<span class="hljs-title">Filter</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">filter</span>\<span class="hljs-title">FilterProcessResult</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Drupal</span>\<span class="hljs-title">filter</span>\<span class="hljs-title">Plugin</span>\<span class="hljs-title">FilterBase</span>;
+
+<span class="hljs-comment">/**
+ * My amazing filter.
+ * <span class="hljs-doctag">@Filter</span>(
+ *   id = &quot;myamazingfilter&quot;,
+ *   title = <span class="hljs-doctag">@Translation</span>(&quot;My amazing filter&quot;),
+ *   description = <span class="hljs-doctag">@Translation</span>(&quot;An amazing filter&quot;),
+ *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
+ * )
+ */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAmazingFilter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FilterBase</span> </span>{
+  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-variable">$text</span>, <span class="hljs-variable">$langcode</span></span>) </span>{
+    <span class="hljs-variable">$result</span> = <span class="hljs-keyword">new</span> FilterProcessResult(<span class="hljs-variable">$text</span>);
+    <span class="hljs-variable">$result</span>-&gt;setProcessedText(str_replace(<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>,
+        <span class="hljs-variable">$result</span>-&gt;getProcessedText));
+    <span class="hljs-keyword">return</span> <span class="hljs-variable">$result</span>;
+  }
+}
+</code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="129" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
+  font-size: 0.75rem;
+}
+" class="lead invert" data-marpit-pagination="129" data-marpit-pagination-total="157" style="--paginate:true;--class:lead invert;--footer:Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42);--theme:uncover;--style:.small-text {
+  font-size: 0.75rem;
+}
+;" data-size="16:9">
+<h2>Try it!</h2>
+<ul>
+<li>Create an input filter plugin.</li>
+<li>Make it do something interesting.</li>
+<li>Assign it to an input filter format.</li>
+<li>Use it with some filtered content (node, block etc).</li>
+</ul>
 <footer>Philip Norton <a href="https://www.hashbangcode.com">hashbangcode.com</a> <a href="https://twitter.com/hashbangcode">@hashbangcode</a> <a href="https://twitter.com/philipnorton42">@philipnorton42</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="130" data-paginate="true" data-class="lead invert" data-footer="Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)" data-theme="uncover" data-style=".small-text {
@@ -2390,12 +2392,14 @@ theme</p>
 <li>The methods getCacheTags() getCacheContexts() must return an array informing Drupal of the tags and contexts.</li>
 </ul>
 <pre><code class="language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCacheTags</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-variable">$node</span> = \Drupal::routeMatch()-&gt;getParameter(<span class="hljs-string">&#x27;node&#x27;</span>);
-  <span class="hljs-keyword">return</span> Cache::mergeTags(<span class="hljs-built_in">parent</span>::getCacheTags(), [<span class="hljs-string">&#x27;node:&#x27;</span> . <span class="hljs-variable">$node</span>-&gt;id()]);
+ <span class="hljs-variable">$node</span> = \Drupal::routeMatch()-&gt;getParameter(<span class="hljs-string">&#x27;node&#x27;</span>);
+ <span class="hljs-keyword">return</span> Cache::mergeTags(<span class="hljs-built_in">parent</span>::getCacheTags(),
+    [<span class="hljs-string">&#x27;node:&#x27;</span>.<span class="hljs-variable">$node</span>-&gt;id()]);
 }
 </code></pre>
 <pre><code class="language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCacheContexts</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">return</span> Cache::mergeContexts(<span class="hljs-built_in">parent</span>::getCacheContexts(), [<span class="hljs-string">&#x27;route&#x27;</span>]);
+  <span class="hljs-keyword">return</span> Cache::mergeContexts(<span class="hljs-built_in">parent</span>::getCacheContexts(),
+    [<span class="hljs-string">&#x27;route&#x27;</span>]);
 }
 </code></pre>
 </section>

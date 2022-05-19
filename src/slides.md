@@ -488,6 +488,7 @@ class MyController extends ControllerBase {
 - **HtmlResponse** - A HTML response.
 - **JsonResponse** - JSON response.
 - **XmlResponse** - XML response.
+- **RedirectResponse** - Redirect to another page.
 - **CacheableResponse** - A response that contains Drupal cache metadata.
 
 ---
@@ -600,8 +601,9 @@ Output:
 ```php
 $build['link'] = [
   '#type' => 'link',
-  '#title' => >t('Link Example'),
-  '#url' => Url::fromRoute('entity.node.canonical', ['node' => 1]),
+  '#title' => t('Link Example'),
+  '#url' => \Drupal\Core\Url::fromRoute('entity.node.canonical',
+    ['node' => 1]),
 ];
 ```
 Output:
@@ -670,6 +672,7 @@ class MyController extends ControllerBase {
 }
 
 ```
+
 <p class="small-text">Note the name "parameter" needs to match the variable $parameter.</p>
 
 ---
@@ -829,51 +832,6 @@ public function validateForm(array &$form,
 
 - [#! code - Drupal 9: An Introduction To Services And Dependency Injection](https://www.hashbangcode.com/article/drupal-9-introduction-services-and-dependency-injection)
 
----
-# Plugins
----
-## Plugins
-- Provide functionality through a common interface.
-- Most things in Drupal are actually plugins.
-- Entity types, fields, blocks, image formats, routes are all plugins.
-- You can also define custom plugins.
----
-## Plugins - Input Filter
-- Simplest plugin is an input filter.
-- This changes the text of a text area as it is rendered.
-- The original text of the field is not altered.
----
-<!-- _footer: "" -->
-```php
-namespace Drupal\mymodule\Plugin\Filter;
-
-use Drupal\filter\FilterProcessResult;
-use Drupal\filter\Plugin\FilterBase;
-
-/**
- * My amazing filter.
- * @Filter(
- *   id = "myamazingfilter",
- *   title = @Translation("My amazing filter"),
- *   description = @Translation("An amazing filter"),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
- * )
- */
-class MyAmazingFilter extends FilterBase {
-  public function process($text, $langcode) {
-    $result = new FilterProcessResult($text);
-    $result->setProcessedText(str_replace('foo', 'bar',
-        $result->getProcessedText));
-    return $result;
-  }
-}
-```
----
-## Try it!
-- Create an input filter plugin.
-- Make it do something interesting.
-- Assign it to an input filter format.
-- Use it with some filtered content (node, block etc).
 ---
 # Entities
 ---
@@ -1197,8 +1155,52 @@ public function action() {
 **Hint**: The _footer_ setting will come in handy here.
 
 ---
-# Custom Blocks
+# Plugins
+---
+## Plugins
+- Provide functionality through a common interface.
+- Most things in Drupal are actually plugins.
+- Entity types, fields, blocks, image formats, routes are all plugins.
+- You can also define custom plugins.
+---
+## Plugins - Input Filter
+- Simplest plugin is an input filter.
+- This changes the text of a text area as it is rendered.
+- The original text of the field is not altered.
+---
+<!-- _footer: "" -->
+```php
+namespace Drupal\mymodule\Plugin\Filter;
 
+use Drupal\filter\FilterProcessResult;
+use Drupal\filter\Plugin\FilterBase;
+
+/**
+ * My amazing filter.
+ * @Filter(
+ *   id = "myamazingfilter",
+ *   title = @Translation("My amazing filter"),
+ *   description = @Translation("An amazing filter"),
+ *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
+ * )
+ */
+class MyAmazingFilter extends FilterBase {
+  public function process($text, $langcode) {
+    $result = new FilterProcessResult($text);
+    $result->setProcessedText(str_replace('foo', 'bar',
+        $result->getProcessedText));
+    return $result;
+  }
+}
+```
+---
+## Try it!
+- Create an input filter plugin.
+- Make it do something interesting.
+- Assign it to an input filter format.
+- Use it with some filtered content (node, block etc).
+---
+# Custom Blocks
 ---
 ## Custom Blocks
 - Add a class to src\Plugin\Block.
@@ -1287,7 +1289,6 @@ public function blockSubmit($form, FormStateInterface $form_state) {
 ## Try it!
 - Add a configuration form to your block.
 - Pull out the configuration value into the block content.
-
 ---
 <!-- _footer: "" -->
 ## Block Caches
@@ -1295,14 +1296,16 @@ public function blockSubmit($form, FormStateInterface $form_state) {
 
 ```php
 public function getCacheTags() {
-  $node = \Drupal::routeMatch()->getParameter('node');
-  return Cache::mergeTags(parent::getCacheTags(), ['node:' . $node->id()]);
+ $node = \Drupal::routeMatch()->getParameter('node');
+ return Cache::mergeTags(parent::getCacheTags(),
+    ['node:'.$node->id()]);
 }
 ```
 
 ```php
 public function getCacheContexts() {
-  return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+  return Cache::mergeContexts(parent::getCacheContexts(),
+    ['route']);
 }
 ```
 ---
