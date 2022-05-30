@@ -9,13 +9,11 @@ style: |
   .small-text {
     font-size: 0.75rem;
   }
-footer: "Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42)"
+footer: "Philip Norton [hashbangcode.com](https://www.hashbangcode.com) [@hashbangcode](https://twitter.com/hashbangcode) [@philipnorton42](https://twitter.com/philipnorton42) [.](#1)"
 marp: true
 
 ---
-
 # Drupal Development
-
 ---
 ## Drupal Development
 - Extending Drupal's functionalty to do whatever you want it to.
@@ -522,7 +520,7 @@ public function action() {
 ## Render Arrays
 There are 3 main ways to use a render array.
 - Direct properties
-- Tempaltes
+- Templates
 - Render element types
 ---
 ## Render Arrays - Direct Properties
@@ -567,13 +565,13 @@ Output:
 Markup
 ```
 ---
-## Render Arrays - Tempaltes
+## Render Arrays - Templates
 - These are generated from the hook_theme() hook.
 - There are a few Drupal core templates, but any module can add more.
 - They use the 'theme' property in the render array.
 ---
 <!-- _footer: "" -->
-## Render Arrays - Tempaltes
+## Render Arrays - Templates
 - The item_list template can be used to print a list of items.
 ```php
 $build['item_list'] = [
@@ -1019,7 +1017,7 @@ return $item;
 # Templates
 
 ---
-## Tempaltes
+## Templates
 - Tell Drupal about custom templates you want to use.
 - Defined with a hook_theme() hook in modules or themes.
 
@@ -1030,7 +1028,7 @@ return $item;
 ```php
 function my_module_theme() {
   return [
-    'my_custom_tempalte' => [
+    'my_custom_template' => [
       'variables' => [
         'description' => '',
         'some_list' => [],
@@ -1048,7 +1046,7 @@ function my_module_theme() {
 ```php
 $build = [];
 $build['content'] = [
-  '#theme' => 'my_custom_tempalte',
+  '#theme' => 'my_custom_template',
   '#description' => $this->t('A description.'),
   '#some_list' => ['item1', 'item2'],
 ];
@@ -1056,9 +1054,9 @@ $build['content'] = [
 ---
 <!-- _footer: "" -->
 ## Template
-- The custom theme needs a custom tempalte.
+- The custom theme needs a custom template.
 - The <em>templates</em> directory is the default location for templates in a module.
-- Our hook will use <em>templates/my_custom_tempalte.html.twig</em>.
+- Our hook will use <em>templates/my_custom_template.html.twig</em>.
 
 ```twig
 <p>{{ description }}</p>
@@ -1121,8 +1119,7 @@ theme
 
 ```php
 function mymodule_page_attachments(array &$attachments) {
-  $attachments['#attached']['library'][] = 'mympdule/some_library';
-  }
+  $attachments['#attached']['library'][] = 'mymodule/some_library';
 }
 ```
 
@@ -1435,6 +1432,81 @@ phpcs --standard=Drupal,DrupalPractice
   md,yml path/to/directory
 ```
 
+---
+# Themes
+---
+## Themes
+- Themes are created by Drupal themes.
+- This is a collection of tempaltes, styles, JavaScript and preprocess methods that allow Drupal to be customised.
+- Themes can be extended from other themes or created as stand alone.
+---
+## Themes
+- Themes are kept in the `themes` directory in the Drupal web root.
+- Just like modules, themes are separated into `contrib` and `custom` directories.
+
+---
+## Themes
+- A theme needs *.info.yml file.
+- This needs to contain the following as a minimum.
+```yml
+name: "Our Theme"
+type: theme
+core_version_requirement: ^8 || ^9
+description: 'This is our theme'
+base theme: classy
+```
+---
+## Themes - Base Themes
+- There are a number of build in base themes to use.
+
+```
+bartik - the default theme
+claro - the new admin theme
+classy - a basic theme that adds classes
+olivero - the new default theme
+seven - the default admin theme
+stable or stable9 - basic theme
+stark - a bare bones theme
+starterkit_theme - a new starter kit theme
+```
+
+---
+## Themes - Base Themes
+- If you want to create a stand alone theme use this:
+```yml
+base theme: false
+```
+---
+
+<!-- _footer: "" -->
+## Themes - Regions
+- Regions are added to yout *.info.yml file.
+- Drupal will define some default regions.
+```yml
+regions:
+  sidebar_first: 'Left sidebar'
+  sidebar_second: 'Right sidebar'
+  content: 'Content'
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  footer: 'Footer'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  breadcrumb: 'Breadcrumb'
+```
+---
+## Themes
+- Libraries can be added to your theme.
+- Create a library using a *.libraries.yml file.
+- Inject a reference to the library in the *.info.yml file.
+```yml
+libraries:
+  - mytheme/theme_library
+```
+- You can reference any library in the site, but best practice is to include the library with the theme.
 ---
 # Some Final Notes
 ---
