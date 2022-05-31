@@ -22,6 +22,7 @@
     "allowLocalFiles": true,
     "html": true,
     "inputDir": "src",
-    "output": "dist"
+    "output": "dist",
+    "engine": "./engine.js"
   }
 }

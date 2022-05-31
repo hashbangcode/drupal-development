@@ -19,6 +19,64 @@ marp: true
 - Extending Drupal's functionalty to do whatever you want it to.
 - Covers Modules, Themes, Install Profiles.
 ---
+<!-- _footer: "" -->
+
+## Contents
+
+<style>
+.container {
+    display: flex;
+    font-size: 0.8rem;
+}
+.col {
+    flex: 1;
+}
+</style>
+<div class="container">
+
+<div class="col">
+
+- [Drupal Development](#0)
+- [Drush](#3)
+- [Setting Up Drupal For Development](#10)
+- [Devel](#22)
+- [Modules](#25)
+- [Writing A Module](#28)
+- [Documentation](#31)
+- [Hooks](#36)
+- [Translation](#46)
+- [Controllers](#50)
+
+</div>
+
+<div class="col">
+
+- [Render Arrays](#59)
+- [Menu Links](#72)
+- [Forms](#79)
+- [Services And Dependency Injection](#90)
+- [Entities](#92)
+- [Drupal Cache](#100)
+- [Templates](#112)
+- [CSS & JavaScript](#118)
+- [Plugins](#126)
+- [Custom Blocks](#131)
+
+</div>
+
+<div class="col">
+
+- [Upates](#140)
+- [Dependencies](#147)
+- [Default Configuration](#151)
+- [Coding Standards](#154)
+- [Themes](#157)
+- [Final Notes](#167)
+
+</div>
+</div>
+
+---
 # Drush
 ---
 ## Drush
@@ -180,7 +238,7 @@ drush php:eval "var_export(\Drupal::getContainer()
 - See it in action.
 
 ---
-# Drupal Module Development
+# Modules
 
 ---
 ## What Is A Module?
@@ -826,7 +884,7 @@ public function validateForm(array &$form,
 # Services And Dependency Injection
 
 ---
-# Resources
+## Resources
 
 - [#! code - Drupal 9: An Introduction To Services And Dependency Injection](https://www.hashbangcode.com/article/drupal-9-introduction-services-and-dependency-injection)
 
@@ -1437,7 +1495,7 @@ phpcs --standard=Drupal,DrupalPractice
 ---
 ## Themes
 - Themes are created by Drupal themes.
-- This is a collection of tempaltes, styles, JavaScript and preprocess methods that allow Drupal to be customised.
+- This is a collection of templates, styles, JavaScript and preprocess methods that allow Drupal to be customised.
 - Themes can be extended from other themes or created as stand alone.
 ---
 ## Themes
@@ -1445,7 +1503,7 @@ phpcs --standard=Drupal,DrupalPractice
 - Just like modules, themes are separated into `contrib` and `custom` directories.
 
 ---
-## Themes
+## Themes - *.info.yml
 - A theme needs *.info.yml file.
 - This needs to contain the following as a minimum.
 ```yml
@@ -1497,8 +1555,9 @@ regions:
   page_bottom: 'Page bottom'
   breadcrumb: 'Breadcrumb'
 ```
+
 ---
-## Themes
+## Themes - Libraries
 - Libraries can be added to your theme.
 - Create a library using a *.libraries.yml file.
 - Inject a reference to the library in the *.info.yml file.
@@ -1507,11 +1566,37 @@ libraries:
   - mytheme/theme_library
 ```
 - You can reference any library in the site, but best practice is to include the library with the theme.
+
 ---
-# Some Final Notes
+## Themes - Templates
+- Templates can be overridden.
+- Use the theme debugger to see what templates are being used.
+- Copy the file (and rename if needed) to override the template.
+
+---
+## Themes - Templates
+- Some useful templates:
+  - html.html.twig - The outermost elements of the page.
+  - page.html.twig - The basic pathe structure, including the regions.
+  - node.html.twig - The internal content of the node.
+
+---
+# Final Notes
 ---
 ## Design Philosophy
 - Think about modules in the most generic way possible. Even when naming it.
 - Use contfiguration to control what your module acts upon.
 - You should be thinking "this might make a good contrib module".
 - Collaboration over competition.
+---
+## Community
+- Drupal follows a [Code of Conduct](https://www.drupal.org/dcoc).
+  - Be considerate
+  - Be respectiful
+  - Be collaborative
+  - When we disagree, we consult others
+  - When we are unsure, we ask for help
+  - Step down considerately
+---
+## Community Working Group
+- If you have a problem, the [Community Working Group](https://www.drupal.org/community/cwg) can help.
