@@ -55,23 +55,23 @@ marp: true
 - [Menu Links](#72)
 - [Forms](#79)
 - [Services And Dependency Injection](#90)
-- [Entities](#92)
-- [Drupal Cache](#100)
-- [Templates](#112)
-- [CSS & JavaScript](#118)
-- [Plugins](#126)
-- [Custom Blocks](#131)
+- [Content Entities](#92)
+- [Drupal Cache](#109)
+- [Templates](#121)
+- [CSS & JavaScript](#127)
+- [Plugins](#135)
+- [Custom Blocks](#140)
 
 </div>
 
 <div class="col">
 
-- [Upates](#140)
-- [Dependencies](#147)
-- [Default Configuration](#151)
-- [Coding Standards](#154)
-- [Themes](#157)
-- [Final Notes](#167)
+- [Upates](#149)
+- [Dependencies](#156)
+- [Default Configuration](#160)
+- [Coding Standards](#163)
+- [Themes](#166)
+- [Final Notes](#176)
 
 </div>
 </div>
@@ -889,26 +889,51 @@ public function validateForm(array &$form,
 - [#! code - Drupal 9: An Introduction To Services And Dependency Injection](https://www.hashbangcode.com/article/drupal-9-introduction-services-and-dependency-injection)
 
 ---
-# Entities
+# Content Entities
 ---
-## Entities
+## Content Entities
 - Entities in Drupal represent "things".
 - Nodes, users, comments, taxonomy terms are all entities.
 ---
-## Entities - Bundles
+## Content Entities - Bundles
 - Entites can have sub-types, called bundles.
 - Bundles inherit all of the functionality of the entity.
 - Think of them as extended classes.
 ---
-## Entities - Bundles
+## Content Entities - Bundles
 | Entity       | Bundles              |
 |--------------|----------------------|
 | Node         | Articles, Basic Page |
 | Media        | Image, Video         |
 | Vocabulary   | Category, Tags       |
 ---
-## Loading Entites
-By ID:
+## Content Entities - Bundles
+- Use methods on the entity to get this information.
+```php
+$node->getEntityTypeId(); // node
+$node->bundle(); // article
+$node->getType(); // article
+```
+- Use these methods to ensure that the entity type you want is correct.
+---
+<!-- _footer: "" -->
+## Content Entities - Preprocess Hooks
+- Entities are often injected into preprocess steps via the varaibles array.
+```php
+function mytheme_preprocess_node(&$variables) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+  if ($node->getType() == 'article') {
+    // Article specific action.
+  }
+}
+```
+<!--
+Block entities are not passed to hook_preprocess_block().
+-->
+---
+## Content Entites - Loading
+- Load node by ID:
 ```php
 $entity_id = 123;
 $entity = \Drupal::entityTypeManager()
@@ -916,8 +941,14 @@ $entity = \Drupal::entityTypeManager()
   ->load($entity_id);
 ```
 ---
-## Loading Entities
-By field value:
+## Content Entites - Loading
+- Load node by ID using the shorthand:
+```php
+$node \Drupal\node\Entity\Node::load(123);
+```
+---
+## Content Entites - Loading
+- Load node by field value:
 ```php
 $value = 'some value';
 $entity = \Drupal::entityTypeManager()
@@ -925,23 +956,91 @@ $entity = \Drupal::entityTypeManager()
   ->loadByProperties(['field_name' => $value]);
 ```
 ---
-## Loading Field Values
+## Content Entites - Creation
+- Create a node.
 ```php
-$field_value = $entity->get('field_name')->getValue()[0]['value'];
+$node = \Drupal::entityTypeManager()
+  ->getStorage('node')
+  ->create([
+  'title' => 'Article title',
+  'type' => 'article',
+]);
+
+$node->save();
+
+$newArticleId = $node->id();
 ```
 ---
-## Creating Entities
-Create a node.
+## Content Entites - Creation
+- Create a node, using the shorthand.
 ```php
-    $node = Node::create([
-      'title' => 'Article title',
-      'type' => 'article',
-    ]);
+$node = \Drupal\node\Entity\Node::create([
+  'title' => 'Article title',
+  'type' => 'article',
+]);
 
-    $node->save();
+$node->save();
 
-    $newArticleId = $node->id();
+$newArticleId = $node->id();
 ```
+---
+## Content Entites - Creation
+- Create a user, using the shorthand.
+```php
+$user = \Drupal\user\Entity\User::create([
+  'name' => 'some.user',
+  'mail' => 'user@example.com',
+  'pass' => 'password'
+]);
+
+$user->addRole('administrator');
+
+$user->save();
+```
+
+---
+## Content Entites - Fields
+- Content entities are fieldable.
+- Use the typed data API to interact with these fields.
+- See https://www.drupal.org/docs/drupal-apis/typed-data-api
+---
+<!-- _footer: "" -->
+## Content Entites - Fields
+- Get a value from a field.
+```php
+// Get the first value.
+$value = $entity->get('title')->value;
+// Get all values.
+$value = $entity->get('title')->getValue()[0]['value'];
+```
+- Note that the 'value' attribute may change depending on the field type.
+- Entity references have the property `target_id`.
+```php
+$value = $entity->get('field_article_term')->target_id;
+```
+---
+## Content Entites - Fields
+- Remember the cardinality of fields.
+```php
+$values = $entity->get('field_article_list')->getValue();
+foreach ($values as $value) {
+  // $value contains the 'value' of the field.
+}
+```
+---
+## Content Entites - Fields
+- Set a value to a field.
+```php
+$node->set('title', 'new title');
+$node->get('title')->setValue(['new title']);
+```
+- Remember to `save()` the entity after setting a field value!
+---
+## Try it!
+- Load an entity using ::load().
+- Pull a value out of a field.
+- Change the value of a field.
+- Create an entity using ::create().
 ---
 # Drupal Cache
 ---
