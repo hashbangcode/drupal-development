@@ -56,22 +56,23 @@ marp: true
 - [Forms](#79)
 - [Services And Dependency Injection](#90)
 - [Content Entities](#92)
-- [Drupal Cache](#109)
-- [Templates](#121)
-- [CSS & JavaScript](#127)
-- [Plugins](#135)
-- [Custom Blocks](#140)
+- [Drupal Cache](#110)
+- [Templates](#122)
+- [CSS & JavaScript](#128)
+- [JavaScript Behaviours](#136)
+- [Plugins](#144)
 
 </div>
 
 <div class="col">
 
-- [Upates](#149)
-- [Dependencies](#156)
-- [Default Configuration](#160)
-- [Coding Standards](#163)
-- [Themes](#166)
-- [Final Notes](#176)
+- [Custom Blocks](#152)
+- [Upates](#161)
+- [Dependencies](#168)
+- [Default Configuration](#172)
+- [Coding Standards](#175)
+- [Themes](#178)
+- [Final Notes](#188)
 
 </div>
 </div>
@@ -1029,6 +1030,13 @@ foreach ($values as $value) {
 ```
 ---
 ## Content Entites - Fields
+- A shorthand is also available.
+```php
+$value = $entity->title->value;
+$value = $entity->field_article_summary->value;
+```
+---
+## Content Entites - Fields
 - Set a value to a field.
 ```php
 $node->set('title', 'new title');
@@ -1309,6 +1317,83 @@ public function action() {
 **Hint**: The _footer_ setting will come in handy here.
 
 ---
+# JavaScript Behaviours
+---
+## JavaScript Behaviours
+- You can register your JavaScript with Drupal.
+- This means that the JavaScript will be loaded at appropriate times.
+- After page has loaded or when the DOM has been updated.
+---
+## JavaScript Behaviours
+- Inject your JavaScript file through a library.
+- Use `Drupal.behaviours` to attach new functionalty.
+```javascript
+(function($){
+  Drupal.behaviors.mymodule = {
+    attach: function (context) {
+      //...
+    }
+  };
+})(jQuery);
+```
+- Avoid collisions by adding your module name. 
+---
+## JavaScript Behaviours
+- The `context` variable is important.
+- It contains the elements being changed.
+- When the page is first loaded then this will be the entire DOM.
+- For ajax requests this will be the elements that have changed after the request.
+---
+## JavaScript Behaviours
+- Use `context` to give context to jQuery.
+```javascript
+$('#some-element', context).click(function (e) {
+  console.log('Clicked!');
+});
+```
+<!-- The second parameter in the $() function is context, so we just pass this upstream. -->
+--- 
+## JavaScript Behaviours
+- The opposite of `attach` is `detach`.
+- This reacts upon DOM elements being removed from the page.
+- Important to detach some actions as they would otherwise keep running. e.g. a polling event for a Vue.js application.
+---
+## JavaScript Behaviours
+- A file containing both `attach` and `detach`.
+```javascript
+(function($){
+  Drupal.behaviors.mymodule = {
+    attach: function (context) {
+      //...
+    },
+    detach: function (context, setting, trigger) {
+      if (trigger == 'unload') {
+        //...
+      }
+    }
+  };
+})(jQuery);
+```
+---
+## JavaScript Behaviours - References
+- [Drupal JavaScript Docs: attach](http://read.theodoreb.net/drupal-jsapi/Drupal.html#.attachBehaviors)
+- [Drupal JavaScript Docs: detach](http://read.theodoreb.net/drupal-jsapi/Drupal.html#.detachBehaviors)
+- [Lullabot: Understanding JavaScript behaviors in Drupal](https://www.lullabot.com/articles/understanding-javascript-behaviors-in-drupal)
+---
+## Try it!
+- Inject a JavaScript file using a library.
+- Do something interesting on the page.
+- Use this as a template.
+```javascript
+(function($){
+  Drupal.behaviors.mymodule = {
+    attach: function (context) {
+      //...
+    }
+  };
+})(jQuery);
+```
+---
 # Plugins
 ---
 ## Plugins
@@ -1316,6 +1401,30 @@ public function action() {
 - Most things in Drupal are actually plugins.
 - Entity types, fields, blocks, image formats, routes are all plugins.
 - You can also define custom plugins.
+---
+## Plugins
+- Plugins can be defined through YAML files and PHP classes.
+---
+<!-- _footer: "" -->
+## Plugins - Menu Item
+- Menu links can be defined through YAML files.
+- The file `*.links.menu.yml` controlls this in your module.
+- This will create a menu item to a page of content.
+```yaml
+mymodule.some_menu_item:
+  title: 'A page'
+  description: 'A description of the link'
+  parent: system.admin_config_system
+  route_name: entity.node.canonical
+  route_parameters:
+    node: 123
+```
+- Use the `menu_name` to attach this to a specific menu.
+<!-- Best practice is to make the menu name and the route name the same. -->
+---
+## Try it!
+- Add a menu plugin to your module.
+- It will live in a file called `mymodule.links.menu.yml`.
 ---
 ## Plugins - Input Filter
 - Simplest plugin is an input filter.
@@ -1328,14 +1437,14 @@ namespace Drupal\mymodule\Plugin\Filter;
 
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
-
 /**
  * My amazing filter.
  * @Filter(
  *   id = "myamazingfilter",
  *   title = @Translation("My amazing filter"),
  *   description = @Translation("An amazing filter"),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
+ *   type = 
+Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
  * )
  */
 class MyAmazingFilter extends FilterBase {
