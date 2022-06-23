@@ -131,7 +131,7 @@ composer require drush/drush
 ---
 ## Setting Up Drupal
 - Lots of options exist to ease development in Drupal.
-- This includes turning off the Drupal cache, forcing autodiscovery of templates and services on every page load and preventing permission hardening. 
+- This includes turning off the Drupal cache, forcing autodiscovery of templates and services on every page load and preventing permission hardening.
 - Adding these options makes Drupal development easier.
 ---
 ## Setting Up Drupal
@@ -217,7 +217,7 @@ drush php:eval "var_export(\Drupal::getContainer()
 -->
 <!-- BEGIN OUTPUT from 'core/profiles/demo_umami/themes/umami/templates/classy/block/block--system-menu-block.html.twig' -->
 <nav role="navigation" aria-labelledby="block-umami-account-menu-menu" id="block-umami-account-menu" class="contextual-region block block-menu navigation menu--account">
-      
+
 ```
 ---
 ## Try it!
@@ -582,6 +582,7 @@ There are 3 main ways to use a render array.
 - Templates
 - Render element types
 ---
+<!-- _footer: "" -->
 ## Render Arrays - Direct Properties
 - Drupal will look for the presence of 'plain_text' or 'markup' in the render array.
 - These are used to generate either escaped text output or for simple blocks of HTML.
@@ -599,6 +600,7 @@ Output:
 Escaped text
 ```
 ---
+<!-- _footer: "" -->
 ## Render Arrays - Direct Properties
 The 'markup' property will allow some HTML elements to be included in the output. Script tags will be escaped to prevent cross site scripting issues.
 ```php
@@ -611,6 +613,7 @@ Output:
 <p>Markup</p>
 ```
 ---
+<!-- _footer: "" -->
 ## Render Arrays - Direct Properties
 The tags allows can be controlled via n 'allowed_tags' property.
 ```php
@@ -653,6 +656,7 @@ Output:
 - Default render elements are `ElementInterface` objects.
 - Form elements are also render elements, of the type `FormElementInterface`, which extends `ElementInterface`.
 ---
+<!-- _footer: "" -->
 ## Render Arrays - Render Elements
 - Render elements use the 'type' property.
 ```php
@@ -794,7 +798,7 @@ class MyForm extends FormBase {
     return 'mymodule-myform';
   }
 
-  public function buildForm(array $form, 
+  public function buildForm(array $form,
    FormStateInterface $form_state
     ) {
     return $form;
@@ -1114,7 +1118,7 @@ $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
 ---
 ## Cache Methods
 - Some plugins extend the CacheableDependencyInterface interface.
-- This gives them access to the methods getCacheContexts(), getCacheTags(), and getCacheMaxAge(). 
+- This gives them access to the methods getCacheContexts(), getCacheTags(), and getCacheMaxAge().
 
 ---
 <!-- _footer: "" -->
@@ -1147,7 +1151,7 @@ Get from cache.
 ```php
 \Drupal::cache()->get('cache_id');
 ```
-Set data to cache. 
+Set data to cache.
 ```php
 \Drupal::cache()->set('cache_id', $data, $max_age, $cache_tags);
 ```
@@ -1158,7 +1162,7 @@ Set data to cache.
 ```php
 use Drupal\Core\Cache\Cache;
 
-$uid = \Drupal::currentUser()->id(); 
+$uid = \Drupal::currentUser()->id();
 $cache_id = 'something:' . $uid;
 
 if ($data = \Drupal::cache()->get($cache_id)) {
@@ -1188,7 +1192,7 @@ return $item;
 
 ---
 ## Templates
-- Custom templates can be deinfed using hook_theme().
+- Custom templates can be defined using hook_theme().
 
 ```php
 function my_module_theme() {
@@ -1336,7 +1340,7 @@ public function action() {
   };
 })(jQuery);
 ```
-- Avoid collisions by adding your module name. 
+- Avoid collisions by adding your module name.
 ---
 ## JavaScript Behaviours
 - The `context` variable is important.
@@ -1352,7 +1356,7 @@ $('#some-element', context).click(function (e) {
 });
 ```
 <!-- The second parameter in the $() function is context, so we just pass this upstream. -->
---- 
+---
 ## JavaScript Behaviours
 - The opposite of `attach` is `detach`.
 - This reacts upon DOM elements being removed from the page.
@@ -1443,7 +1447,7 @@ use Drupal\filter\Plugin\FilterBase;
  *   id = "myamazingfilter",
  *   title = @Translation("My amazing filter"),
  *   description = @Translation("An amazing filter"),
- *   type = 
+ *   type =
 Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
  * )
  */
@@ -1621,7 +1625,7 @@ function mymodule_update_9001(&$sandbox = NULL) {
       'default' => '',
     ],
     'primary key' => ['myfield1'],
-  ]; 
+  ];
   $schema = Database::getConnection()->schema();
   $schema->createTable('mytable', $spec);
 }
@@ -1635,7 +1639,7 @@ function mymodule_update_9001(&$sandbox = NULL) {
 ## Dependencies
 - Drupal can install other modules or include third party libraries automatically.
 ---
-## Dependencies 
+## Dependencies
 - Enforce Drupal module dependencies.
 ```yml
 name: My Module
@@ -1693,7 +1697,7 @@ config/
 ---
 ## Coding Standards
 ```
-phpcs --standard=Drupal,DrupalPractice 
+phpcs --standard=Drupal,DrupalPractice
   --extensions=php,module,inc,install,test,profile,theme,css,info,txt,
   md,yml path/to/directory
 ```
