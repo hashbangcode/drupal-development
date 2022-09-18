@@ -57,22 +57,22 @@ marp: true
 - [Services And Dependency Injection](#90)
 - [Content Entities](#92)
 - [Drupal Cache](#110)
-- [Templates](#122)
-- [CSS & JavaScript](#128)
-- [JavaScript Behaviours](#136)
-- [Plugins](#144)
+- [Templates](#127)
+- [CSS & JavaScript](#133)
+- [JavaScript Behaviours](#141)
+- [Plugins](#149)
 
 </div>
 
 <div class="col">
 
-- [Custom Blocks](#152)
-- [Upates](#161)
-- [Dependencies](#168)
-- [Default Configuration](#172)
-- [Coding Standards](#175)
-- [Themes](#178)
-- [Final Notes](#188)
+- [Custom Blocks](#157)
+- [Upates](#166)
+- [Dependencies](#173)
+- [Default Configuration](#177)
+- [Coding Standards](#180)
+- [Themes](#183)
+- [Final Notes](#199)
 
 </div>
 </div>
@@ -1061,15 +1061,25 @@ $node->get('title')->setValue(['new title']);
 ---
 <!-- _footer: "" -->
 ## Cache Meta Data
-- Added to render arrays to inform Drupal about how to cache the data.
+- Added to render arrays and plugins to inform Drupal about how to cache the data.
+- This can include cache expiry time, tags or context.
+- The cache will bubble up the page, adding to the cache information of parent elements.
+- The entire page cache is goverened by the cache meta data within it.
+---
+## Cache Expiry Time
+- Sets the maximum time that the cache can be used for, in seconds.
 
 Cache for an hour.
+
 ```php
 '#cache' => [
   'max-age' => 3600,
 ]
 ```
-Cache for ever.
+---
+## Cache Expiry Time
+Cache forever.
+
 ```php
 '#cache' => [
   'max-age' => \Drupal\Core\Cache\Cache::PERMANENT,
@@ -1083,18 +1093,19 @@ Cache for ever.
 ---
 <!-- _footer: "" -->
 ## Cache Tags
-Create a cache tag for node 1 and node 2.
-```php
-'#cache' => [
-  'tags' => ['node:1', 'node:2'],
-]
-```
+
 Create a cache tag for current user.
 ```php
 $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
 ...
 '#cache' => [
   'tags' => $cacheTags,
+]
+```
+Create a cache tags for node 1 and node 2.
+```php
+'#cache' => [
+  'tags' => ['node:1', 'node:2'],
 ]
 ```
 ---
@@ -1109,12 +1120,13 @@ $cacheTags = User:load(\Drupal::currentUser()->id())->getCacheTags();
 ```
 ---
 ## Cache Contexts
-- Cache Contexts are hierarchical, so Drupal will cache the most granular variation to avoid unnecessary variations.
+- Cache Contexts are hierarchical, so Drupal will cache the most granular variation to avoid unnecessary variations as they bubble up the layers.
 - For example, when caching a page per user its pointless to also cache a block on that page per user role.
 ---
 ## Cache Methods
-- Some plugins extend the CacheableDependencyInterface interface.
+- Some plugins (e.g Blocks) extend the CacheableDependencyInterface interface.
 - This gives them access to the methods getCacheContexts(), getCacheTags(), and getCacheMaxAge(). 
+- The methods getCacheTags() getCacheContexts() must return an array informing Drupal of the tags and contexts.
 
 ---
 <!-- _footer: "" -->
@@ -1139,15 +1151,34 @@ public function getCacheContexts() {
 }
 ```
 ---
+## Cache Recap
+- Cache expiry time govern how long the cache can be kept for.
+- Cache tags identify specific items between different caches.
+- Cache contexts identify generics.
+- Cache bubbles up to the top of the page.
+---
+## Cache Review
+- The Cache Review module can be used to inspect the cache on a Drupal site.
+
+https://www.drupal.org/project/cache_review
+
+- It shows how expiry time, tags and contexts work together to cache a page.
+
+---
+## Try it!
+- Install the Cache Review module.
+- Look at how the cache expiry, tags and context bubble up the page.
+
+---
 ## Cache API
-- Get and set things from the Drupal cache.
+- Get and set data from the Drupal cache.
 - Integrates with cache tags if needed.
 
-Get from cache.
+Get data from cache.
 ```php
 \Drupal::cache()->get('cache_id');
 ```
-Set data to cache. 
+Save data to cache. 
 ```php
 \Drupal::cache()->set('cache_id', $data, $max_age, $cache_tags);
 ```
@@ -1161,8 +1192,8 @@ use Drupal\Core\Cache\Cache;
 $uid = \Drupal::currentUser()->id(); 
 $cache_id = 'something:' . $uid;
 
-if ($data = \Drupal::cache()->get($cache_id)) {
-  return $item;
+if ($cache = \Drupal::cache()->get($cache_id)) {
+  return $cache->data;
 }
 
 $data = massive_calculation();
@@ -1173,10 +1204,12 @@ $cache_tags[] = 'uid:' . $uid;
 return $item;
 ```
 ---
-## Cache
-- Some things (e.g. blocks) have special callback to return cache tags and cache context information.
-- The methods getCacheTags() getCacheContexts() must return an array informing Drupal of the tags and contexts.
+## Try it!
+- Create a controller action.
+- Use the sleep() function to make the action take a long time.
+- Use the cache system to cache the output and reduce the load time.
 
+**Hint**: Use max-age to prevent the action from being cached.
 
 ---
 # Templates
@@ -1272,11 +1305,13 @@ some_library:
 ## CSS Style Types
 - There are 5 types of CSS types which control how the order in which the CSS files are loaded.
 
+```
 base
 layout
 component
 state
 theme
+```
 
 ---
 ## Libraries Attachment
@@ -1472,6 +1507,7 @@ class MyAmazingFilter extends FilterBase {
 - The build() method returns content as a render array.
 
 ---
+<!-- _footer: "" -->
 ## Custom Block
 
 ```php
@@ -1491,7 +1527,6 @@ use Drupal\Core\Block\BlockBase;
 class ArticleHeaderBlock extends BlockBase {
   public function build() {}
 }
-
 ```
 
 ---
@@ -1519,7 +1554,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ArticleHeaderBlock extends BlockBase implements ContainerFactoryPluginInterface {
 }
-
 ```
 
 ---
@@ -1563,9 +1597,7 @@ public function getCacheTags() {
  return Cache::mergeTags(parent::getCacheTags(),
     ['node:'.$node->id()]);
 }
-```
 
-```php
 public function getCacheContexts() {
   return Cache::mergeContexts(parent::getCacheContexts(),
     ['route']);
@@ -1787,6 +1819,78 @@ libraries:
   - html.html.twig - The outermost elements of the page.
   - page.html.twig - The basic pathe structure, including the regions.
   - node.html.twig - The internal content of the node.
+---
+<!-- _footer: "" -->
+## Themes - Suggestions
+- Tempaltes will be selected based on their name. 
+- A list of suggestions will be used to pick the most relevant template.
+- For example, the node.html.twig template can be overwridden using one of the following:
+```
+node--<node ID>--<view_mode>.html.twig
+node--<node ID>.html.twig
+node--<bundle>--<view_mode>.html.twig
+node--<bundle>.html.twig
+node--<view_mode>.html.twig
+```
+- Order is top to bottom.
+
+---
+## Themes - Suggestions
+- To override the node.html.twig template you need to create a copy of the file and rename it.
+- To override an article node when viewed in full mode add the following file.
+```
+node.html.twig -> node--article-full.html.twig
+```
+
+---
+## Themes - Suggestion Hooks
+
+Add template suggestions for custom theme elements.
+```
+hook_theme_suggestions_HOOK(array $variables)
+```
+
+Alter any template suggestions to add your own suggestions.
+```
+hook_theme_suggestions_HOOK_alter(array &$suggestions, $variables)
+```
+
+<p class="small-text">These hooks must be placed in *.theme or *.module files (or at least be available at any time).</p>
+
+--- 
+## Themes - Suggestion Hooks
+- Use a hook_theme_suggestions_HOOK_alter() hook.
+```php
+function mytheme_theme_suggestions_node_alter(
+array &$suggestions, 
+array $variables
+) {
+    $suggestions[] = 'node__common';
+}
+```
+- Create the template `node--common.html.twig`
+---
+## Themes - Suggestion Hooks
+- Remember the order of suggestions. Adding a suggestion like this will override all template suggestions.
+- Convention is to separate parts of the suggestion with a double underscore (__),
+- All '_' are translated to '-' in the template filename.
+- Remember view modes when adding suggestions.
+- NOTE: Suggestions are cached!
+---
+## Themes - Twig
+- Twig is a template engine.
+- `{{ var }}` to print a property called "var".
+- Twig understands arrays and objects and with automatically find the relevant part.
+`{{ var.prop }}` will mean Twig searches through, `var['prop']`, `var->prop`, `var->getProp()`.
+---
+## Themes - Twig
+- Twig control strictures are contained in `{% %}` tags.
+- For example, to print `var` if it contains something:
+```twig
+{% if var %}
+  {{ var }}
+{% endif %}
+```
 
 ---
 # Final Notes
