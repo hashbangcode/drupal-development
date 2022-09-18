@@ -1,9 +1,9 @@
-# marp-talk-template
-A talk template that uses Marp CLI
+# Drupal Development
+A Drupal development presentation that uses the Marp CLI
 
 ## Install
 
-1 Clone the repo 
+1 Clone the repo
 ```bash
 $ git clone git@github.com:pfwd/talk-template.git
 `````
